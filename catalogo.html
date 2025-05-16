@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Luxury Store - Catálogo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">LUXURY STORE</div>
+    <nav class="menu">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html" class="active">Catálogo</a>
+    </nav>
+    <div class="user-account">
+      <img src="user-icon.png" alt="Usuario" class="user-icon" />
+      <span id="username-display"></span>
+    </div>
+  </header>
+
+  <main>
+    <div id="carrito" class="carrito">
+      <h3>Carrito</h3>
+      <ul id="lista-carrito"></ul>
+      <p>Total: $<span id="total">0</span></p>
+      <button id="btn-pagar" disabled>Pagar</button>
+    </div>
+
+
+    <input
+      type="text"
+      id="buscador"
+      placeholder="Buscar prenda por nombre..."
+      style="width: 100%; max-width: 400px; font-size: 1.2rem; padding: 10px; margin-bottom: 20px;"
+    />
+
+    <h1>Catálogo de Ropa</h1>
+    <div class="productos">
+      <div class="producto">
+        <img src="imagenes.png/CAMISA.JPL.jpeg" alt="Camisa blanca" />
+        <h2>Camisa Blanca</h2>
+        <p>$25000</p>
+        <label for="talla-camisa1">Talla:</label>
+        <select class="select-talla" id="talla-camisa1" name="talla">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M" selected>M</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <button class="btn-agregar" data-nombre="Camisa Blanca" data-precio="25000">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="imagenes.png/PANTALON.JPL.jpeg" alt="Pantalón negro" />
+        <h2>Pantalón Negro</h2>
+        <p>$45000</p>
+        <label for="talla-pantalon1">Talla:</label>
+        <select class="select-talla" id="talla-pantalon1" name="talla">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M" selected>M</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <button class="btn-agregar" data-nombre="Pantalón Negro" data-precio="45000">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="imagenes.png/ZAPA.JPL.jpeg" alt="Zapatos deportivos" />
+        <h2>Zapatos Deportivos</h2>
+        <p>$60000</p>
+        <label for="talla-zapatos1">Talla:</label>
+        <select class="select-talla" id="talla-zapatos1" name="talla">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M" selected>M</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <button class="btn-agregar" data-nombre="Zapatos Deportivos" data-precio="60000">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="imagenes.png/SUDA.JPL.jpeg" alt="Sudadera gris" />
+        <h2>Sudadera Gris</h2>
+        <p>$30000</p>
+        <label for="talla-sudadera1">Talla:</label>
+        <select class="select-talla" id="talla-sudadera1" name="talla">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M" selected>M</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <button class="btn-agregar" data-nombre="Sudadera Gris" data-precio="30000">Agregar al carrito</button>
+      </div>
+      <div class="producto">
+        <img src="imagenes.png/GORRA.JPL.jpeg" alt="Gorra azul" />
+        <h2>Gorra Azul</h2>
+        <p>$15000</p>
+        <label for="talla-gorra1">Talla:</label>
+        <select class="select-talla" id="talla-gorra1" name="talla">
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M" selected>M</option>
+          <option value="XL">XL</option>
+          <option value="XXL">XXL</option>
+        </select>
+        <button class="btn-agregar" data-nombre="Gorra Azul" data-precio="15000">Agregar al carrito</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+
+    const usuario = sessionStorage.getItem('usuario') || 'Invitado';
+    document.getElementById('username-display').textContent = usuario;
+
+    const btnAgregar = document.querySelectorAll('.btn-agregar');
+    const listaCarrito = document.getElementById('lista-carrito');
+    const totalSpan = document.getElementById('total');
+    const btnPagar = document.getElementById('btn-pagar');
+
+    let carrito = [];
+
+    function actualizarCarrito() {
+      listaCarrito.innerHTML = '';
+      let total = 0;
+      carrito.forEach(item => {
+        total += item.precio;
+        const li = document.createElement('li');
+        li.textContent = `${item.nombre} (Talla: ${item.talla}) - $${item.precio}`;
+        listaCarrito.appendChild(li);
+      });
+      totalSpan.textContent = total;
+      btnPagar.disabled = carrito.length === 0;
+    }
+
+    btnAgregar.forEach(button => {
+      button.addEventListener('click', () => {
+        const productoDiv = button.parentElement;
+        const nombre = button.getAttribute('data-nombre');
+        const precio = parseInt(button.getAttribute('data-precio'));
+
+        const selectTalla = productoDiv.querySelector('.select-talla');
+        const talla = selectTalla ? selectTalla.value : 'M';
+
+        carrito.push({ nombre, precio, talla });
+        actualizarCarrito();
+      });
+    });
+
+    btnPagar.addEventListener('click', () => {
+      sessionStorage.setItem('carrito', JSON.stringify(carrito));
+      window.location.href = 'compra.html';
+    });
+
+ 
+    const buscador = document.getElementById('buscador');
+    const productosDiv = document.querySelector('.productos');
+
+
+    const bodega = {
+      "Camisa Blanca": true,
+      "Pantalón Negro": false,
+      "Zapatos Deportivos": true,
+      "Sudadera Gris": true,
+      "Gorra Azul": false
+    };
+
+    buscador.addEventListener('input', () => {
+      const texto = buscador.value.toLowerCase();
+      const productos = productosDiv.querySelectorAll('.producto');
+      productos.forEach(producto => {
+        const nombre = producto.querySelector('h2').textContent.toLowerCase();
+        if (nombre.includes(texto)) {
+          producto.style.display = 'block';
+
+          let estado = producto.querySelector('.disponibilidad');
+          if (!estado) {
+            estado = document.createElement('p');
+            estado.className = 'disponibilidad';
+            producto.appendChild(estado);
+          }
+          estado.textContent = bodega[producto.querySelector('h2').textContent] 
+            ? 'Disponible en bodega ✅' 
+            : 'No disponible en bodega ❌';
+
+        } else {
+          producto.style.display = 'none';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

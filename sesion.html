@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Luxury Store - Login</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="login">
+  <div class="login-container">
+    <h1>Iniciar Sesión</h1>
+    <form id="login-form">
+      <input type="text" id="username" placeholder="Usuario" required />
+      <input type="password" id="password" placeholder="Contraseña" required />
+
+
+      <div class="social-icons">
+        <img src="imagenes.png/gmail.PNG.png" alt="Iniciar con Gmail" title="Iniciar con Gmail"
+             style="cursor:pointer; width: 40px;" onclick="loginConGmail()" />
+        <img src="imagenes.png/facebook.PNG.png" alt="Iniciar con Facebook" title="Iniciar con Facebook"
+             style="cursor:pointer; width: 40px;" onclick="loginConFacebook()" />
+      </div>
+
+      <button type="submit">Entrar</button>
+
+  </div>
+
+  <script>
+
+    const form = document.getElementById('login-form');
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const usuario = document.getElementById('username').value;
+      sessionStorage.setItem('usuario', usuario);
+      window.location.href = 'index.html';
+    });
+
+
+    function loginConGmail() {
+      sessionStorage.setItem('usuario', 'Cuenta de Google');
+      window.location.href = 'index.html';
+    }
+
+    function loginConFacebook() {
+      sessionStorage.setItem('usuario', 'Cuenta de Facebook');
+      window.location.href = 'index.html';
+    }
+  </script>
+</body>
+</html>

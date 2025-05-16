@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Luxury Store - Inicio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">LUXURY STORE</div>
+    <nav class="menu">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+    </nav>
+    <div class="user-account">
+      <img src="user-icon.png" alt="Usuario" class="user-icon" />
+      <span id="username-display"></span>
+    </div>
+  </header>
+
+  <main>
+    <div class="slider">
+      <img src="imagenes.png/ZAPA.JPL.jpeg" class="slide active" alt="Moda 1" />
+      <img src="img/slide2.jpg" class="slide" alt="Moda 2" />
+      <img src="img/slide3.jpg" class="slide" alt="Moda 3" />
+    </div>
+  </main>
+
+  <script>
+
+    const usuario = sessionStorage.getItem('usuario') || 'Invitado';
+    document.getElementById('username-display').textContent = usuario;
+
+
+    const slides = document.querySelectorAll('.slide');
+    let current = 0;
+
+    function nextSlide() {
+      slides[current].classList.remove('active');
+      current = (current + 1) % slides.length;
+      slides[current].classList.add('active');
+    }
+
+    setInterval(nextSlide, 4000); // cambia cada 4 segundos
+  </script>
+</body>
+</html>

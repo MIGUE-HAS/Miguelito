@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Finalizar Compra</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Datos para finalizar la compra</h1>
+
+  <section class="resumen-compra">
+    <h2>Resumen de compra:</h2>
+    <div id="detalle-compra"></div>
+    <p><strong>Total a pagar: $<span id="total-pago">0</span></strong></p>
+  </section>
+
+  <section class="formulario-compra">
+    <form id="form-compra">
+      <input type="text" placeholder="Nombre completo" required />
+      <input type="text" placeholder="Dirección" required />
+      <input type="tel" placeholder="Teléfono" required />
+      <input type="text" placeholder="Número de cuenta" required />
+
+      <label for="metodo-pago"><strong>Método de pago:</strong></label>
+      <select id="metodo-pago" required>
+        <option value="">Selecciona un método</option>
+        <option value="nequi">Nequi</option>
+        <option value="bancolombia">Bancolombia</option>
+        <option value="daviplata">Daviplata</option>
+        <option value="efectivo">Efectivo</option>
+      </select>
+
+      <button type="submit">Pagar</button>
+    </form>
+  </section>
+
+  <script>
+    const carrito = JSON.parse(sessionStorage.getItem('carrito')) || [];
+    const detalleCompra = document.getElementById('detalle-compra');
+    const totalPago = document.getElementById('total-pago');
+
+    let total = 0;
+    carrito.forEach(item => {
+      const p = document.createElement('p');
+      p.textContent = `${item.nombre} - $${item.precio}`;
+      detalleCompra.appendChild(p);
+      total += item.precio;
+    });
+    totalPago.textContent = total;
+
+    document.getElementById('form-compra').addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.location.href = 'reseñas.html';
+    });
+  </script>
+</body>
+</html>
